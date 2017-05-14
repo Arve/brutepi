@@ -68,7 +68,7 @@ filter "drc_l" {
 filter "drc_r" {
     process: -1;
     from_inputs: "right_in";
-    to_outputs: "right_out"/9.2;
+    to_outputs: "right_out"/8.0;
     coeff: "right_convolver";
     crossfade: false;
     delay: 0;
