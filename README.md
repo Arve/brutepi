@@ -93,6 +93,6 @@ The installation script is interactive, and will ask you a few questions before 
 
 After the installation, you can remove the repository:
 
-    cd /home/brutepi
+    cd /home/pi
     sudo rm -rf brutepi
 
