@@ -94,18 +94,6 @@ sudo apt-get install autoconf automake avahi-daemon build-essential brutefir git
 mkdir -p tmp
 cd tmp
 
-## Install Apple ALAC
-echo "Installing Apple ALAC decoder"
-git clone https://github.com/mikebrady/alac.git
-cd alac
-# This is a hack
-sh autoreconf -fi
-./configure
-make
-make install
-ldconfig -v
-cd ..
-
 ## Install shairport-sync
 echo "Installing shairport-sync"
 git clone https://github.com/mikebrady/shairport-sync.git
@@ -113,7 +101,7 @@ cd shairport-sync
 git checkout development
 git pull
 autoreconf -fi
-./configure --sysconfdir=/etc --with-alsa --with-avahi --with-ssl=openssl --with-metadata --with-soxr --with-systemd --with-apple-alac
+./configure --sysconfdir=/etc --with-alsa --with-avahi --with-ssl=openssl --with-metadata --with-soxr --with-systemd
 make
 make install
 cd ../..
