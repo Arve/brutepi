@@ -1,0 +1,15 @@
+[Unit] 
+Description=BruteFIR
+After=multi-user.target
+ 
+[Service]
+Type=forking
+ExecStart=/usr/bin/brutefir -daemon -quiet -nodefault /etc/brutefir_config
+Restart=always
+User=shairport-sync
+Group=shairport-sync
+LimitRTPRIO=99
+LimitMEMLOCK=infinity
+
+[Install]
+WantedBy=multi-user.target

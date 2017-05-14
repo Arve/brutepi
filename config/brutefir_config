@@ -1,0 +1,76 @@
+float_bits: 32;             
+filter_length: 4096,16;       # length of filters
+sampling_rate: 44100;
+overflow_warnings: false;
+show_progress: false;       
+max_dither_table_size: 0;   
+allow_poll_mode: false;
+modules_path: ".";          # extra path where to find BruteFIR modules
+monitor_rate: true;        # monitor sample rate
+powersave: true;            # pause filtering when input is zero
+lock_memory: true;          # try to lock memory if realtime prio is set
+sdf_length: -1;             # subsample filter half length in samples
+safety_limit: 8.0;             # if non-zero max dB in output before aborting
+convolver_config: "/home/shairport-sync/.brutefir_convolver"; # location of convolver config file
+# config_file: "/home/shairport-sync/.brutefir_config"; # standard location of main config file
+
+
+coeff "left_convolver" {
+    filename: "/home/shairport-sync/left.raw";
+    format: "S32_LE";
+    blocks: -1;
+    skip: 0;
+    shared_mem: false;
+};
+
+# Right channel
+coeff "right_convolver" {
+    filename: "/home/shairport-sync/right.raw";
+    format: "S32_LE";
+    blocks: -1;
+    skip: 0;
+    shared_mem: false;
+};
+
+
+input "left_in", "right_in" {
+    device: "alsa" { device: "hw:Loopback,0"; ignore_xrun: true; };
+    sample: "S16_LE";
+    channels: 2/0,1;
+    delay: 0,0;
+    maxdelay: -1;
+    mute: false, false;
+};
+
+
+# Likewise, configure where BruteFIR sends its output
+output "left_out", "right_out" {
+    device: "alsa" { device: "hw:OUTPUT_DAC"; ignore_xrun: true; };
+    sample: "S24_LE";
+    channels: 2/0,1;
+    delay: 0,0;
+    maxdelay: -1;
+    subdelay: 0,0;
+    mute: false, false;
+    dither: false;
+};
+
+
+filter "drc_l" {
+    process: -1;
+    from_inputs: "left_in";
+    to_outputs: "left_out"/8.0;
+    coeff: "left_convolver";
+    crossfade: false;
+    delay: 0;
+};
+
+filter "drc_r" {
+    process: -1;
+    from_inputs: "right_in";
+    to_outputs: "right_out"/9.2;
+    coeff: "right_convolver";
+    crossfade: false;
+    delay: 0;
+};
+
