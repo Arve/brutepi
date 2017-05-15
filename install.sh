@@ -128,17 +128,23 @@ systemctl enable shairport-sync.service
 
 ## Now on to the ugly truths of system tweaking
 
-echo "Applying tweaks"
 for i in `pgrep ksoftirqd`; do chrt -p 99 $i; done
 
 
 # Tweaks. Yes.  Patching rc.local is a tad ugly, but required
+cp /etc/rc.local /etc/rc.local.old
+echo "Patching /etc/rc.local - original file copied to /etc/rc.local.old"
+
 sed -i -e "s/exit 0/for irqdps in \`pgrep ksoftirqd\`; do chrt -p 99 \$irqdps; done\n/" /etc/rc.local
 echo -e "echo \"performance\" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor\n" >> /etc/rc.local
 echo -e "\n\nexit 0" >> /etc/rc.local
 
 ## Change default swappiness
 sysctl -w vm.swappiness=1
+
+cp /etc/sysctl.conf /etc/sysctl.conf.old
+echo "Patching /etc/sysctl.conf - original file copied to /etc/sysctl.conf.old"
+
 echo -e "\nvm.swappiness=1" >> /etc/sysctl.conf
 
 systemctl start brutefir
@@ -153,7 +159,7 @@ echo "blacklist snd_bcm2835" > /etc/modprobe.d/blacklist-snd_2835.conf
 
 rm -rf tmp
 
-echo "Done! You may now reboot if you wish"
+echo "Done!"
 
 
 
