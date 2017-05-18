@@ -15,6 +15,8 @@ Before you start, it's assumed that you have some familiarity with all of the ab
 3. Somewhat familiar with the bash shell.
 4. Room correction using software like [Room EQ Wizard](https://www.roomeqwizard.com/).
 
+## First steps
+
 ## Exporting and converting impulse responses
 
 After you have created your correction filters in Room EQ Wizard, you need to export them using:
@@ -28,7 +30,7 @@ When exporting export each channel individually using the following settings:
 3. Check "Normalize samples to peak value"
 4. Save the filter for the left channel as "left-fir.wav", and the right channel as "right-fir.wav"
 
-Save the files in the `impulses` subreddit.
+Save the files in the `impulses` directory.
 
 ## Preparing the Raspberry Pi installation before first boot
 

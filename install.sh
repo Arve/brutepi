@@ -37,13 +37,13 @@ fi
 
 if ! [ -f "fir/left.wav" ]; then
     echo -n "ERROR: Missing convolution file fir/left.wav for left audio channel."
-    echo -n "Make sure that fir/left.wav and fir/right.wav exists and rerun script. "
+    echo -n "Make sure fir/left.wav (and fir/right.wav) exists and rerun script. "
     exit 1
 fi
 
 if ! [ -f "fir/right.wav" ]; then
-    echo -n "ERROR: Missing convolution file fir/left.wav for left audio channel."
-    echo -n "Make sure that fir/left.wav and fir/right.wav exists and rerun script. "
+    echo -n "ERROR: Missing convolution file fir/right.wav for right audio channel."
+    echo -n "Make sure  fir/right.wav (and fir/left.wav exists and rerun script. "
     exit 1
 fi
 
